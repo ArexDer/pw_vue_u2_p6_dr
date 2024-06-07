@@ -1,15 +1,26 @@
+
 <template>
-  <Contador />
+<img src="./assets/logo.png" alt="Logo de VUE, no existe">
+
+<!-- COMPONENTE -->
+  <Contador titulo="Estudiante"  />
+  <Contador titulo="Profesor"/>
+  <Contador/>
+  
+
 </template>
 
 <script>
 import Contador from "./components/Contador.vue"
 
 export default {
+
   name: 'App',
   components: {
     Contador
-  }
+  },
+
+  
 }
 </script>
 
