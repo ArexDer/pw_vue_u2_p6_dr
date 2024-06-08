@@ -2,10 +2,12 @@
 <template>
 <img src="./assets/logo.png" alt="Logo de VUE, no existe">
 
-<!-- COMPONENTE -->
-  <Contador titulo="Estudiante"  />
-  <Contador titulo="Profesor"/>
-  <Contador/>
+<!-- COMPONENTE               : uso V-BIND  ->  --> 
+  <Contador titulo="Estudiante"  :num="-1" />
+  <Contador titulo="Profesor"  />
+  <Contador v-bind:num="10+1" />
+
+  <Contador :num="calcularValor()" />
   
 
 </template>
@@ -19,6 +21,11 @@ export default {
   components: {
     Contador
   },
+  methods:{
+    calcularValor(){
+      return 10+3;
+    }
+  }
 
   
 }
