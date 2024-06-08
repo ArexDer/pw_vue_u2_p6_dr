@@ -17,11 +17,34 @@ export default {
 
   //YO LA PUEDO USAR COMO UNA PROPIEDAD REACTIVA 
   //PUEDO AÑADIRLE MAS ATRIBUTOS
-  props:["titulo","num"],
+
+  // FORMA BASICA DE PROPOR => props:["titulo","num"],
+
+  //FORMA MAS ESTANDARIZADA:
+  props:{
+    titulo:String,
+
+    num:{
+
+      type: Number,
+      required:false, //SI ES REQUERIDO TRUE Y FALSE
+      default:10,   //Si no tiene se manda este por DEFECTO
+
+      validator(value){ //Este metodo tiene un RETURN booleano
+
+        return value>0
+      }
+
+    }
+
+  },
+
 
   data() {
     return {
-      numero: 5,
+
+      numero: this.num,
+
     };
   },
   methods: {
@@ -46,7 +69,7 @@ export default {
       return this.numero * this.numero;
     },
     presentar(){
-      if(this.titulo1==undefined){
+      if(this.titulo!==undefined){
         return this.titulo;
       }else{
         return 'Texto que Quiero';
@@ -59,6 +82,8 @@ export default {
 <style>
 * {
   background-color: beige;
+ 
+ 
 }
 button{
   background-color: #64B687;
@@ -69,10 +94,14 @@ button{
   color: white;
   margin: 10px;
   cursor: pointer;
+
 }
 
 button:hover{
   background-color: rgb(3, 75, 85);
   
 }
+
+
+
 </style>
