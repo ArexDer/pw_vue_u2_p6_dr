@@ -1,6 +1,6 @@
 <template>
 <img v-if="img"
-   v-bind:src="img"
+v-bind:src="img"
     alt="No se pudo"
 />
 
@@ -10,64 +10,58 @@
     <p>Recuerda Terminar la pregunta con el Signo de INTERROGACION (?)</p>
 
 
-    <div class="respuesta">
+    <div v-show="mensaje" class="respuesta">
 
 <h2>{{ pregunta }}</h2>
-<h1>{{ respuesta }}</h1>
+
+<h1>{{ respuesta ==='yes' ?'SI!':'NO!'}}</h1>
     </div>
 </div>
 </template>
 
 <script>
 export default {
-
     data(){
         return{
             pregunta:null,
-
             respuesta:null,
-
             img:null,
+            mensaje:false
         }
     },
 
     watch:{
         pregunta(value, oldValue){
+            this.mensaje=false
             console.log({value ,oldValue});
             if(!value.includes("?")){
                 return;//Salgase del observador
             } 
-
             //CONSUMIR EL -----API -----
             this.obtenerRespuesta();
-
+            this.mensaje=true
         },
-
     },
     methods:{
         async obtenerRespuesta(){
             this.respuesta="pensando..."
+            
             //await ESPERA QUE AL API RESPONDA fetch('Url del API').then(respuesta => respuesta.json())
             const data=await fetch('https://yesno.wtf/api').then(resp =>resp.json())
             console.log(data);
            //Simepre cuando mi metodo tiene un AWAIT debo declararlo al metodo como ASINCRONO
             const{answer,forced,image}=data;
             console.log(answer);
-
             this.respuesta=answer;
             this.img=image;
             return data;
         }
-
     },
-
 };
-
-
-
 </script>
 
-<style>
+
+<style scoped>
 img,
 .oscuro {
 max-height: 100%;
@@ -85,14 +79,12 @@ left: 0px;
 }
 
 .oscuro {
-background-color: rgba(0, 0, 0, 0.3);
+background-color: rgba(131, 68, 68, 0.3);
 /* 0.0 full traspararente y 1.0 FULL OPACO*/
 }
 
 .pregunta-container {
 position: relative;
-
-
 }
 
 input{
@@ -122,5 +114,6 @@ p{
 .respuesta{
     margin-top: 150px;
 }
+
 
 </style>
