@@ -2,23 +2,45 @@
     
 <div class="container-imagen">
 <!--CUANDO ES TRUE ME DA LA IMAGEN-->
-   <img v-show="mostrar" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/54.svg" alt="No es posible visualizar la IMAGEN" >
+   <img v-show="mostrarPokemon" :src="imagenFuente" >
    
    <!--CUANDO ES FALSE ME DA LA IMAGEN-->
-   <img v-show="!mostrar" class="oculta-pokemon" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/54.svg" alt="No es posible visualizar la IMAGEN" >
+   <img v-show="!mostrarPokemon" class="oculta-pokemon" :src="imagenFuente" alt="No es posible visualizar la IMAGEN" >
 </div>
 </template>
 
 <script>
 export default {
+
     data(){
         return{
             mostrar:false,
-        }
-    }
+            
 
+        }
+    },
+    props:{
+        idPokemon:{
+            type: Number,
+            required: true
+        },
+
+        mostrarPokemon:{
+            type: Boolean,
+            required: true
+        }
+    },
+
+    computed:{
+        imagenFuente(){
+            return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${this.idPokemon}.svg`;
+
+        }
+
+    }
 }
 </script>
+
 
 <style scoped>
 .oculta-pokemon{
