@@ -1,52 +1,69 @@
 <template>
-    <h1>VISUALIZA EL POKEMON CORRECTO</h1>
-  <PokemonImagen :idPokemon="54"  :mostrarPokemon="false"/>
-  <PokemonOpciones :pokemons="arreglo"/>
-
+    <div>
+        <h1>VISUALIZA EL POKEMON CORRECTO</h1>
+        <h1 v-if="!pokemonCorrecto">Por favor espere ...</h1>
+        <div v-else>
+            <PokemonImagen :idPokemon="pokemonCorrecto.id" :mostrarPokemon="mostrar" />
+            <div v-if="!respuestaCorrecta">
+                <PokemonOpciones :pokemons="arreglo" @seleccionPokemon="revisarRespuesta($event)" />
+                <p class="incorrecto" v-if="respuestaIncorrecta" >INCORRECTO - Inténtalo de nuevo</p>
+            </div>
+            <div v-if="respuestaCorrecta">
+                <p>ACERTASTE - EL NOMBRE DEL POKEMON ES: {{ pokemonCorrecto.nombre }}</p>
+            </div>
+            
+        </div>
+    </div>
 </template>
 
 <script>
-import PokemonImagen  from '../components/PokemonImagen.vue'
-import PokemonOpciones  from '../components/PokemonOpciones.vue'
-
-//AQUI VA EL NOOMBRE DEL METODO DE EXPORTACION.
+import PokemonImagen from '../components/PokemonImagen.vue'
+import PokemonOpciones from '../components/PokemonOpciones.vue'
 import obtenerPokemonsFachada from '../clientes/ClientePokemonAPI.js'
 
 export default {
-
-    components:{
+    components: {
         PokemonImagen,
-         PokemonOpciones
+        PokemonOpciones
     },
-
-    methods:{
-        async cargaInicial(){
-            const vectorInicial = await obtenerPokemonsFachada(4)
-            this.arreglo=vectorInicial
-            
-        },
-    },
-
-    //PROPIEDAD RECTIVA
-    data(){
-        return{
-            arreglo:[],
-            
-
+    data() {
+        return {
+            arreglo: [],
+            pokemonCorrecto: null,
+            mostrar: false,
+            respuestaCorrecta: false,
+            respuestaIncorrecta: false
         }
     },
-
-    //REPRESENTA MONTAR EL COMPONENTE DENTRO DE LA PAGINA.
-    //CICLO DE VIDA...
-    mounted(){
-        this.cargaInicial();
-
+    async mounted() {
+        await this.cargaInicial();
+    },
+    methods: {
+        async cargaInicial() {
+            const vectorInicial = await obtenerPokemonsFachada(7);
+            this.arreglo = vectorInicial;
+            const indice = Math.floor(Math.random() * this.arreglo.length);
+            this.pokemonCorrecto = this.arreglo[indice];
+        },
+        revisarRespuesta(dato) {
+            if (dato.ident === this.pokemonCorrecto.id) {
+                this.mostrar = true;
+                this.respuestaCorrecta = true;
+                this.respuestaIncorrecta = false;
+            } else {
+                this.respuestaIncorrecta = true;
+            }
+        }
     }
-    
-
 };
 </script>
 
 <style>
-
+p {
+    font-size: 24px;
+    color: aliceblue;
+}
+.incorrecto{
+    color: aquamarine;
+}
 </style>

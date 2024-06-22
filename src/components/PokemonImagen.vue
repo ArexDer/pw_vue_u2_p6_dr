@@ -52,10 +52,13 @@ img{
     height: 200px;
     width:  250px;
     position: absolute;
-    right: 38%;
+    
 }
 
 .container-imagen{
+    display: flex;
+    justify-content: center;
+    align-content: center;
     height: 200px;
 }
 

@@ -17,7 +17,7 @@ const obtenerPokemons=async(longitud) =>{
     for (let i = 0; i < vector.length; i++) {
         vectorFinal[i]= await construirPokemon(vector[i])
       }
-      return vector;
+      return vectorFinal;
 
 }
 
@@ -33,7 +33,7 @@ const obtenerPokemons=async(longitud) =>{
 }
 
 const consumirAPI= async(id)=>{
-    return  await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then(r=>r.json);
+    return  await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then(r=>r.json());
 
 }
 
