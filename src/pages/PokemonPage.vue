@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <h1>QUIEN ES ESE POKEMON?</h1>
+    <div class="container-juego">
+        <h1 class="titulo">QUIEN ES ESE POKEMON?</h1>
         <div class="puntaje-intentos">
             <p>Puntaje: {{ puntaje }}</p>
             <p>Intentos: {{ intentos }}</p>
@@ -12,13 +12,15 @@
             <div v-if="!respuestaCorrecta">
                 <PokemonOpciones :pokemons="arreglo" @seleccionPokemon="revisarRespuesta($event)" />
                 <p  class="incorrecto" v-if="respuestaIncorrecta">INCORRECTO - Inténtalo de nuevo</p>
+               
             </div>
             <div v-if="respuestaCorrecta">
                 <p>Es...: {{ pokemonCorrecto.nombre }}</p>
             </div>
         </div>
+        <button class="reset" @click="reiniciarJuego">Reiniciar</button>
         
-        <button @click="reiniciarJuego">Reiniciar</button>
+       
     </div>
 </template>
 
@@ -107,5 +109,25 @@ p {
     align-content: center;
     gap: 50px;
 
+}
+
+.reset{
+    margin-left: 45px;
+    border: 2px solid rgb(114, 62, 62);
+    border-radius: 5px;
+    margin-bottom: 12px;
+    width: 200px;
+    background-color: aliceblue;
+    color: black;
+    cursor: pointer;
+    padding: 15px;
+}
+.reset:hover{
+    background: rgb(73, 1, 5);
+    color: white;
+}
+
+.titulo{
+    background: white;
 }
 </style>
