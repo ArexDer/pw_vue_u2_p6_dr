@@ -16,7 +16,6 @@ export default {
         return{
             mostrar:false,
             
-
         }
     },
     props:{
